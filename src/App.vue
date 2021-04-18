@@ -1,6 +1,6 @@
 <template>
   <Materialize/>
-  <SpeechRecogniotion msg="Welcome to Your Vue.js App"/>
+  <SpeechRecogniotion msg="App"/>
 
   <SheetInfo/>
 
