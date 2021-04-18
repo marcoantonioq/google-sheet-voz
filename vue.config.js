@@ -1,6 +1,5 @@
 module.exports = {
   chainWebpack: (config) => {
-    console.log('Config:', config.module.rules)
     config.module
     .rule('images')
     .use('url-loader')

@@ -1,26 +1,26 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Materialize/>
+  <SpeechRecogniotion msg="Welcome to Your Vue.js App"/>
+
+  <SheetInfo/>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Materialize from './components/Materialize.vue';
+import SpeechRecogniotion from './components/SpeechRecognition.vue'
+import SheetInfo from './components/SheetInfo.vue'
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    SpeechRecogniotion,
+    SheetInfo,
+    Materialize,
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
