@@ -1,27 +1,23 @@
 <template>
-  <Materialize/>
-  <SpeechRecogniotion msg="App"/>
+  <SpeechRecogniotion message="Iniciar" />
 
-  <SheetInfo/>
+  <SheetValues />
 
   v.1.0.1
-
 </template>
 
 <script>
-import Materialize from './components/Materialize.vue';
-import SpeechRecogniotion from './components/SpeechRecognition.vue'
-import SheetInfo from './components/SheetInfo.vue'
-
+// import Materialize from './components/Materialize.vue';
+import SpeechRecogniotion from "./components/SpeechRecognition.vue";
+import SheetValues from "./components/Sheets/SheetValues.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     SpeechRecogniotion,
-    SheetInfo,
-    Materialize,
-  }
-}
+    SheetValues,
+  },
+};
 </script>
 
 <style>
