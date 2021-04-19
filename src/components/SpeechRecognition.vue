@@ -34,6 +34,7 @@ export default {
   },
   methods: {
     toggleTracking: function () {
+      this.$emit("msg", "clicou!");
       this.tracking = !this.tracking;
       if (this.tracking) {
         this.recognition.start();
@@ -43,6 +44,7 @@ export default {
     },
     synthesizer: function (texto = "") {
       this.message = texto;
+      this.$emit("msg", texto);
       return texto;
     },
     result: function (event) {
@@ -50,7 +52,6 @@ export default {
       let final_transcript = "";
 
       for (var i = event.resultIndex; i < event.results.length; ++i) {
-
         if (event.results[i].isFinal) {
           final_transcript += event.results[i][0].transcript;
           this.synthesizer(final_transcript);

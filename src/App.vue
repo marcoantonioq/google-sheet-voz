@@ -1,24 +1,32 @@
 <template>
-  <SpeechRecogniotion message="Iniciar" />
+  <SynthesizerVoz @msg="mensage"> </SynthesizerVoz>
 
-  <SheetValues />
-
-  v.1.0.1
+  <Footer />
 </template>
 
 <script>
 // import Materialize from './components/Materialize.vue';
-import SpeechRecogniotion from "./components/SpeechRecognition.vue";
-import SheetValues from "./components/Sheets/SheetValues.vue";
+import SynthesizerVoz from "./components/SynthesizerVoz.vue";
+import Footer from "./components/Footer.vue";
 
 export default {
   name: "App",
   components: {
-    SpeechRecogniotion,
-    SheetValues,
+    SynthesizerVoz,
+    Footer,
+  },
+  methods: {
+    mensage(texto) {
+      console.log("Recebido texto em app: ", texto);
+    },
   },
 };
 </script>
 
 <style>
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
 </style>
