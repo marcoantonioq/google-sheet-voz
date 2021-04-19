@@ -18,6 +18,15 @@
 </template>
 
 <script>
+
+import { match } from "../Helpers/Validations.js";
+import {Analyzer} from "../Helpers/VoiceAnalyzer.js";
+
+Analyzer.registerEvent(match(/(^LOCAL|^SALA|^Bloco|^FALA)/), ()=>{
+  console.log("Inserir localllll!")
+})
+
+
 export default {
   name: "SheetInfo",
   data() {
@@ -27,10 +36,10 @@ export default {
     };
   },
   watch: {
-    local(val, old){
-      console.log(val,old)
-    }
-  }
+    local(val, old) {
+      console.log(val, old);
+    },
+  },
 };
 </script>
 

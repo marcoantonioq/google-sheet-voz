@@ -12,21 +12,14 @@ import SheetForm from "./Sheets/SheetForm.vue";
 import SheetValues from "./Sheets/SheetValues.vue";
 
 import { isNotEmpty, isNumber, match } from "./Helpers/Validations.js";
-import { toNumber } from "./Helpers/ConvertValues.js";
-import { voiceAnalyzer, voiceAnalyzerPush } from "./Helpers/VoiceAnalyzer.js";
+// import { toNumber } from "./Helpers/ConvertValues.js";
+import {Analyzer} from "./Helpers/VoiceAnalyzer.js";
 
-let teste = function() {
-  console.log(SheetForm)
-}
+Analyzer.registerEvent(match(/^SEM PATRIMÔNIO$/), ()=>{
+  console.log("Inserir sem patrimênio!")
+})
 
-// console.log('VoiceAnalyzer:', voiceAnalyzer("BONITO"));
-voiceAnalyzerPush(match(/^SEM PATRIMÔNIO$/), teste);
-voiceAnalyzer("Sem patrimônio")
-
-
-// func.forEach(el=>{
-//   el()
-// });
+Analyzer.analyzer("Local")
 
 export default {
   components: {
@@ -111,10 +104,7 @@ export default {
       }
     },
     receiveMensage(texto) {
-      console.log("Nao está vazia: ", isNotEmpty(texto));
-      console.log("É numero: ", isNumber(toNumber(texto)));
-      this.texto = texto;
-      console.log("Recebido texto em synthesizer: ", texto);
+      Analyzer.analyzer(texto)
     },
   },
 };
