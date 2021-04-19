@@ -14,12 +14,18 @@
         <input type="checkbox" class="filled-in"> 
         <span>Auto enviar</span>
     </div>
+    {{message}}
   </div>
 </template>
 
 <script>
 export default {
-  name:'SheetInfo'
+  name:'SheetInfo',
+  data() {
+    return {
+      message: "Bem vindo!"
+    }
+  }
 
 }
 </script>
