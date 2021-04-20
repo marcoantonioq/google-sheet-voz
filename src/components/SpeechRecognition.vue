@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col s12">
       <div class="voz">
-        {{ message }}
+        {{ transcript }}
         <i
           v-on:click="toggleTracking"
           v-bind:class="[
@@ -21,20 +21,22 @@
 <script>
 export default {
   name: "SpeechRecognition",
-  props: {
-    message_prop: String,
-  },
   data() {
     return {
-      message: this.message_prop,
+      phrase: "",
+      transcript: "",
       tracking: false,
       recognition: new window.webkitSpeechRecognition(),
       lang: "pt-BR",
     };
   },
+  watch: {
+    phrase: function (val) {
+      this.$emit("setText", val);
+    },
+  },
   methods: {
     toggleTracking: function () {
-      this.$emit("msg", "clicou!");
       this.tracking = !this.tracking;
       if (this.tracking) {
         this.recognition.start();
@@ -42,25 +44,14 @@ export default {
         this.recognition.stop();
       }
     },
-    synthesizer: function (texto = "") {
-      this.message = texto;
-      this.$emit("msg", texto);
-      return texto;
-    },
     result: function (event) {
-      let interim_transcript = "";
-      let final_transcript = "";
-
+      this.transcript = "";
       for (var i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
-          final_transcript += event.results[i][0].transcript;
-          this.synthesizer(final_transcript);
-          console.log("Frase: ", final_transcript);
+          this.phrase = event.results[i][0].transcript;
         } else {
-          interim_transcript += event.results[i][0].transcript;
+          this.transcript += event.results[i][0].transcript;
         }
-
-        this.message = interim_transcript;
       }
     },
     onerror: function (event) {
@@ -68,8 +59,8 @@ export default {
         console.log("Erro ao acessar o microfone :(. De permissão!!!");
       } else if (event.error === "aborted") {
         console.log("Verifique se seu microfone está desocupado!");
-        this.recognition.stop();
       }
+      this.recognition.stop();
     },
     onspeechstart: function () {
       console.log("speech started");

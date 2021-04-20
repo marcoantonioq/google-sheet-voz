@@ -1,111 +1,47 @@
 <template>
-  <SpeechRecognition @msg="receiveMensage" />
+  <Speech @setText="setText" />
 
-  <SheetForm />
-
-  <SheetValues />
+  <Form />
 </template>
 
 <script>
-import SpeechRecognition from "./SpeechRecognition.vue";
-import SheetForm from "./Sheets/SheetForm.vue";
-import SheetValues from "./Sheets/SheetValues.vue";
+import Speech from "./SpeechRecognition.vue";
+import Form from "./Sheets/SheetForm.vue";
 
-import { isNotEmpty, isNumber, match } from "./Helpers/Validations.js";
+import { match } from "./Helpers/Validations.js";
 // import { toNumber } from "./Helpers/ConvertValues.js";
-import {Analyzer} from "./Helpers/VoiceAnalyzer.js";
+import { Analyzer } from "./Helpers/VoiceAnalyzer.js";
 
-Analyzer.registerEvent(match(/^SEM PATRIMÔNIO$/), ()=>{
-  console.log("Inserir sem patrimênio!")
-})
-
-Analyzer.analyzer("Local")
 
 export default {
   components: {
-    SpeechRecognition,
-    SheetForm,
-    SheetValues,
+    Speech,
+    Form,
   },
+  emits: ["setText", "remove"],
   data() {
     return {
-      texto: "",
+      text: "",
     };
   },
   methods: {
-    synthesizer: function (texto = "") {
-      this.message = texto;
-
-      if (isNotEmpty(texto)) {
-        try {
-          const sendLog = (msg) => {
-            console.log(msg);
-          };
-
-          // Verifica se é bonito
-          if (texto.toUpperCase().match(/BONIT?(O|ÃO)|LINDO/)) {
-            sendLog("Marco é o mais bonito!!! :D");
-            return true;
-          }
-
-          if (texto.toUpperCase().match(/^SEM PATRIMÔNIO$/)) {
-            if (!this.obs) {
-              sendLog("Informe uma observação!!!");
-              throw "Item sem patrimônio adicionado!";
-            }
-            this.values.unshift({
-              npat: "",
-              local: this.local,
-              obs: this.obs,
-              lock: false,
-            });
-            sendLog(`Ok, adicionado ${this.obs} em ${this.local}!`);
-            throw "Item sem patrimônio adicionado!";
-          }
-
-          if (texto.toUpperCase().match(/(^LOCAL|^SALA|^Bloco|^FALA)/)) {
-            let replace = texto.replace(/^(F|f)ala/g, "Sala");
-            replace = replace.replace(/^(L|l)ocal /g, "");
-            this.local = replace[0].toUpperCase() + replace.substr(1);
-            throw "Local setado!";
-          }
-
-          if (texto.toUpperCase().match(/^OBSERVAÇ(ÃO|ÕES)/)) {
-            let replace = texto.replace(/^(O|o)bservação /g, "");
-            this.obs = replace[0].toUpperCase() + replace.substr(1);
-            throw "Local setado!";
-          }
-
-          let num = +texto.replace(/\D+/g, "");
-          console.log("Numero PAT: ", num);
-
-          if (!this.local) {
-            sendLog("Informe um local!");
-            throw "Informe local!";
-          }
-
-          if (isNumber(num) && num > 10000) {
-            this.values.unshift({
-              npat: +num,
-              local: this.local,
-              obs: this.obs,
-              lock: false,
-            });
-            this.syncSheetToValues(+num);
-          } else {
-            let msg = `'${texto}' não é um valor válido!`;
-            sendLog(msg);
-            throw msg;
-          }
-        } catch (e) {
-          console.log("Status: ", e);
-          return false;
-        }
-      }
+    setText(text) {
+      // Analyzer.analyzer(text);
+      this.$emit("setText", text);
     },
-    receiveMensage(texto) {
-      Analyzer.analyzer(texto)
-    },
+  },
+  created() {
+    Analyzer.registerEvent(match(/^SEM PATRIMÔNIO$/), () => {
+      console.log("Inserir sem patrimênio!");
+    });
+
+    Analyzer.registerEvent(match(/^APAGAR$/), () => {
+      console.log("Apagar ultimo item!");
+      this.$emit("remove", 12333333);
+    });
+
+    Analyzer.analyzer("APAGAR")
+    Analyzer.analyzer("SEM PATRIMÔNIO")
   },
 };
 </script>
