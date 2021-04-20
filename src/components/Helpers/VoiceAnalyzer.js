@@ -39,7 +39,7 @@ function VoiceAnalyzer() {
       })
       .forEach((val) => {
         try {
-          val[1]();
+          val[1](texto);
         } catch (e) {
           console.error(e);
         }
