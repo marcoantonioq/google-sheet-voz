@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import { ModelAnalyzer } from "./components/Model/ModelAnalyzer.js";
 import mitt from "mitt";
+import './registerServiceWorker'
 
 const emitter = mitt();
 
