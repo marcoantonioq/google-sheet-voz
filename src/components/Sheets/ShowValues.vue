@@ -1,4 +1,5 @@
 <template>
+
   <div
     v-for="(items, local) in groupBy(values, 'local')"
     class="row itens"
@@ -15,12 +16,14 @@
         <div class="col s12 m10">
           <i>
             {{ item.others }}
+            Dados retornados do banco de dados!
           </i>
         </div>
       </div>
       <div class="row">
         <div class="col">
           {{ item.obs ? `Obs: ${item.obs}` : "" }}
+          Observações
         </div>
         <div class="right">
           <button

@@ -1,38 +1,36 @@
 <template>
-  <div class="row">
-    <div class="col s12">
-      <div class="voz">
-        {{ transcript }}
-        <i
-          v-on:click="toggleTracking"
-          v-bind:class="[
-            tracking ? 'red-text' : 'grey-text',
-            'mic',
-            'material-icons',
-            'center-align',
-          ]"
-          >mic</i
-        >
-      </div>
-    </div>
-  </div>
+  <a v-on:click="toggleTracking">
+    <i
+      v-bind:class="[
+        tracking ? 'red-text' : '',
+        'mic',
+        'material-icons',
+        'center-align',
+      ]"
+      >mic
+    </i>
+  </a>
 </template>
 
 <script>
 export default {
   name: "SpeechRecognition",
+  emits: ["phase", "transcript"],
   data() {
     return {
       phrase: "",
       transcript: "",
       tracking: false,
-      recognition: new window.webkitSpeechRecognition(),
+      recognition: false,
       lang: "pt-BR",
     };
   },
   watch: {
     phrase: function (val) {
-      this.$emit("setText", val);
+      this.$emit("phase", val);
+    },
+    transcript: function (val) {
+      this.$emit("transcript", val);
     },
   },
   methods: {
@@ -60,6 +58,7 @@ export default {
       } else if (event.error === "aborted") {
         console.log("Verifique se seu microfone está desocupado!");
       }
+      this.emitter.emit("msg", "Erro ao acessar o microfone!");
       this.recognition.stop();
     },
     onspeechstart: function () {
@@ -73,7 +72,8 @@ export default {
     },
   },
   created: function () {
-    this.recognition = Object.assign(this.recognition, {
+    let sr = window.webkitSpeechRecognition || window.SpeechRecognition;
+    this.recognition = Object.assign(new sr(), {
       continuous: false,
       interimResults: true,
       lang: this.lang || "pt-BR",
@@ -101,4 +101,5 @@ export default {
   right: -8px;
   position: relative;
 }
+
 </style>

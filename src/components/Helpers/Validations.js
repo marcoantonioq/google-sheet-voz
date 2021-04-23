@@ -4,7 +4,7 @@
  * @returns boolean
  */
 export function isNotEmpty(field) {
-  return field.trim() !== "";
+  return `${field}`.trim() !== "";
 }
 
 /**
@@ -16,17 +16,14 @@ export function isNumber(number) {
   return !isNaN(parseFloat(number));
 }
 
-
 /**
  * Verifica que match
  * @param {regex} regex RegEx
  * @returns boolean
  */
-export function match(regex){
+export function match(regex) {
   return (text) => text.toUpperCase().match(regex);
 }
-
-
 
 /**
  * Verifica se string está vazia
@@ -62,16 +59,31 @@ export function between(n1, n2) {
 /**
  * Menor que
  * @param {Number} n1 Menor que n1
- * @returns boolean
+ * @returns function
  */
 export function lt(n1) {
   /**
-   * Maior que
+   * Menor que
    * @param {Number} n1 Maior que n1
    * @returns boolean
    */
   return (n2) => n2 < n1;
 }
+
+/**
+ * Maior que
+ * @param {Number} n1 Maior que n1
+ * @returns function
+ */
+export function gt(n1) {
+  /**
+   * Maior que
+   * @param {Number} n1 Maior que n1
+   * @returns boolean
+   */
+  return (n2) => n2 > n1;
+}
+
 /**
  * Verifica se IPv4 é privado
  * @param {string} address Informe IP
