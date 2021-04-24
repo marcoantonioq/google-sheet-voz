@@ -8,7 +8,7 @@
     {{ transcript }}
   </div>
 
-  <!-- <Form @pushValues="pushValues" /> -->
+  <Form @pushValues="pushValues" />
 
   <Values @remove="removeValue" @send="sendGoogleSheet" :values="values" />
 
@@ -22,7 +22,7 @@
 <script>
 import Values from "./components/Sheets/ShowValues.vue";
 import Menu from "./components/Menu.vue";
-// import Form from "./components/Sheets/SheetForm.vue";
+import Form from "./components/Sheets/SheetForm.vue";
 
 import { Analyzer } from "./components/Model/ModelAnalyzer.js";
 import { Sheet } from "./components/Helpers/GoogleSheet.js";
@@ -31,7 +31,7 @@ export default {
   name: "App",
   components: {
     Values,
-    // Form,
+    Form,
     Menu,
   },
   data() {

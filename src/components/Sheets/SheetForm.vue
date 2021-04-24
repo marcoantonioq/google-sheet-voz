@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import { Sheet } from "../Helpers/GoogleSheet.js";
-import { isNotEmpty } from "../Helpers/Validations.js";
+// import { Sheet } from "../Helpers/GoogleSheet.js";
+// import { isNotEmpty } from "../Helpers/Validations.js";
 
 export default {
   name: "SheetForm",
@@ -46,42 +46,42 @@ export default {
       },
     };
   },
-  watch: {
-    "value.npat": function (npat) {
-      this.others = Sheet.getInfo(npat);
-    },
-  },
-  methods: {
-    add_col: function () {
-      console.log("Add col");
-    },
-    pushValues: function (value) {
-      this.$emit("pushValues", value);
-    },
-    submit: function () {
-      const valid = [isNotEmpty(this.value.npat), isNotEmpty(this.value.local)];
+//   watch: {
+//     "value.npat": function (npat) {
+//       this.others = Sheet.getInfo(npat);
+//     },
+//   },
+//   methods: {
+//     add_col: function () {
+//       console.log("Add col");
+//     },
+//     pushValues: function (value) {
+//       this.$emit("pushValues", value);
+//     },
+//     submit: function () {
+//       const valid = [isNotEmpty(this.value.npat), isNotEmpty(this.value.local)];
 
-      if (valid.every((e) => e)) {
-        console.log("on push submit");
-        this.pushValues(this.value);
-        this.saveStorage("form", this.value);
-      } else {
-        this.emitter.emit("msg", "Verifique todos o campos!");
-      }
-    },
-    readStorage: function (key) {
-      return JSON.parse(localStorage.getItem(key));
-    },
-    saveStorage: function (key, value) {
-      localStorage.setItem(key, JSON.stringify(value));
-    },
-  },
-  created() {
-    let form = this.readStorage("form");
-    if (form) {
-      this.value = form;
-    } 
-  },
+//       if (valid.every((e) => e)) {
+//         console.log("on push submit");
+//         this.pushValues(this.value);
+//         this.saveStorage("form", this.value);
+//       } else {
+//         this.emitter.emit("msg", "Verifique todos o campos!");
+//       }
+//     },
+//     readStorage: function (key) {
+//       return JSON.parse(localStorage.getItem(key));
+//     },
+//     saveStorage: function (key, value) {
+//       localStorage.setItem(key, JSON.stringify(value));
+//     },
+//   },
+//   created() {
+//     let form = this.readStorage("form");
+//     if (form) {
+//       this.value = form;
+//     } 
+//   },
 };
 </script>
 
