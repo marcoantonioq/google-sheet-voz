@@ -17,8 +17,11 @@
       </div>
     </div>
     <div class="center-align col s12">
-      <a @click.stop.prevent="submit">
+      <a class="col s6" @click.stop.prevent="add_col">
         <i class="medium material-icons"> add_box </i>
+      </a>
+      <a class="col s6" @click.stop.prevent="submit">
+        <i class="medium material-icons"> save </i>
       </a>
     </div>
   </div>
@@ -45,10 +48,13 @@ export default {
   },
   watch: {
     "value.npat": function (npat) {
-      this.others = Sheet.getInfo(npat)
+      this.others = Sheet.getInfo(npat);
     },
   },
   methods: {
+    add_col: function () {
+      console.log("Add col");
+    },
     pushValues: function (value) {
       this.$emit("pushValues", value);
     },
@@ -56,12 +62,25 @@ export default {
       const valid = [isNotEmpty(this.value.npat), isNotEmpty(this.value.local)];
 
       if (valid.every((e) => e)) {
+        console.log("on push submit");
         this.pushValues(this.value);
+        this.saveStorage("form", this.value);
       } else {
         this.emitter.emit("msg", "Verifique todos o campos!");
       }
-      console.log("submit");
     },
+    readStorage: function (key) {
+      return JSON.parse(localStorage.getItem(key));
+    },
+    saveStorage: function (key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    },
+  },
+  created() {
+    let form = this.readStorage("form");
+    if (form) {
+      this.value = form;
+    } 
   },
 };
 </script>

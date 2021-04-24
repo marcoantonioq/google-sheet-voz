@@ -36,7 +36,7 @@
             v-on:click.stop.prevent="$emit('send', item.key)"
             v-bind:class="[item.lock ? 'disabled' : '', 'btn-flat']"
           >
-            <i class="material-icons">send</i>
+            <i class="material-icons">cloud_queue</i>
           </button>
         </div>
       </div>

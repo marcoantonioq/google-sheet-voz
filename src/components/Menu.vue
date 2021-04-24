@@ -1,19 +1,23 @@
 <template>
   <div class="menu">
     <div class="row center-align">
-      <a class="col s3">
+      <a @click.stop.prevent="sendMail" class="col s3">
         <i class="medium material-icons">import_export</i> <br />
         Exportar
       </a>
       <a class="col s3">
-        <i class="medium material-icons">sync</i> <br />
+        <i @click.stop.prevent="syncAll" class="medium material-icons">sync</i> <br />
         Sincronizar
       </a>
       <a class="col s3">
-        <i class="medium material-icons">send</i> <br />
+        <i @click.stop.prevent="sendAll" class="medium material-icons">cloud_upload</i> <br />
         Enviar
       </a>
-      <Speech @phase="e=>$emit('phrase',e)" @transcript="e=>$emit('transcript',e)" /> <br />
+      <Speech
+        @phase="(e) => $emit('phrase', e)"
+        @transcript="(e) => $emit('transcript', e)"
+      />
+      <br />
     </div>
   </div>
 </template>
@@ -23,16 +27,32 @@ import Speech from "./SpeechRecognition.vue";
 
 export default {
   name: "Menu",
+  props: {
+    values: Array,
+  },
   components: {
     Speech,
   },
   methods: {
-    // phase(e) {
-    //   this.$emit("phrase", `Pha ${e}`);
-    // },
-    // transcript(e) {
-    //   this.$emit("transcript", `Transc ${e}`);
-    // },
+    sendMail() {
+      let values = this.values.map((el) => {
+        return "\n" + Object.values(el).join(";\t");
+      });
+      let subject = `Inventário: backup realizado em ${new Date().toLocaleString('pt-BR')}`
+
+      let body = encodeURIComponent(`
+      ${subject}
+
+      ${values}`);
+
+      window.open(`mailto:cap.goias@ifg.edu.br?subject=${subject}&body=${body}`);
+    },
+    syncAll(){
+      console.log("sync all");
+    },
+    sendAll(){
+      console.log("Send all");
+    },
   },
 };
 </script>

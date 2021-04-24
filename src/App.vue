@@ -12,7 +12,11 @@
 
   <Values @remove="removeValue" @send="sendGoogleSheet" :values="values" />
 
-  <Menu @transcript="(e) => (this.transcript = e)" @phrase="setPhrase" />
+  <Menu
+    @transcript="(e) => (this.transcript = e)"
+    @phrase="setPhrase"
+    :values="values"
+  />
 </template>
 
 <script>
@@ -35,8 +39,10 @@ export default {
       name: "App",
       values: [],
       transcript: "",
+      cache: [],
     };
   },
+  watch: {},
   methods: {
     mensage(text) {
       console.log("Recebido texto em app: ", text);
@@ -47,23 +53,42 @@ export default {
     pushValues(values) {
       let obj = JSON.parse(JSON.stringify(values));
       this.values.unshift(obj);
+      this.saveStorage("values", this.values);
       this.emitter.emit("msg", "Salvo com sucesso!!!");
-      console.log(this.values);
     },
     removeValue(key) {
-      confirm(`Remover remover item?`) && this.values.splice(key, 1);
+      let msg = `Remover ${this.values[key].npat} item?`;
+      if (confirm(msg)) {
+        this.values.splice(key, 1);
+        this.saveStorage("values", this.values);
+      }
     },
     sendGoogleSheet(e) {
       console.log("App sendGoogle:", e);
     },
     getGoogleSheet(npat) {
-      Sheet.getInfo(npat)
+      Sheet.getInfo(npat);
     },
-    sync() {
-      // sync all
+    readStorage: function (key) {
+      return JSON.parse(localStorage.getItem(key));
+    },
+    clearStorage: function () {
+      localStorage.clear();
+    },
+    saveStorage: function (key, value) {
+      console.log(`Salvar ${key}:`, value);
+      localStorage.setItem(key, JSON.stringify(value));
     },
   },
   created() {
+    let values = this.readStorage("values");
+    console.log(values);
+    if (values) {
+      this.values = values;
+    } else {
+      this.clearStorage();
+    }
+
     this.emitter.on("msg", (text) => {
       console.log(text);
     });
