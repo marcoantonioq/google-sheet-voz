@@ -10,7 +10,7 @@
 
   <!-- <Form @pushValues="pushValues" /> -->
 
-  <!-- <Values @remove="removeValue" @send="sendGoogleSheet" :values="values" /> -->
+  <Values @remove="removeValue" @send="sendGoogleSheet" :values="values" />
 
   <Menu
     @transcript="(e) => (this.transcript = e)"
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-// import Values from "./components/Sheets/ShowValues.vue";
+import Values from "./components/Sheets/ShowValues.vue";
 import Menu from "./components/Menu.vue";
 // import Form from "./components/Sheets/SheetForm.vue";
 
@@ -30,7 +30,7 @@ import { Sheet } from "./components/Helpers/GoogleSheet.js";
 export default {
   name: "App",
   components: {
-    // Values,
+    Values,
     // Form,
     Menu,
   },
