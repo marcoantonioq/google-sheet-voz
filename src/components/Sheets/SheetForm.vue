@@ -48,6 +48,7 @@ export default {
   },
   watch: {
     "value.npat": function (npat) {
+      console.log(npat)
       // this.others = Sheet.getInfo(npat);
     },
   },
