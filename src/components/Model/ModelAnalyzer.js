@@ -15,7 +15,7 @@ const Model = {
       console.log("recebido valor", num);
       if (isValid) {
         component.value.npat = num;
-        component.value.auto_send && component.submit();
+        component.value.auto_add && component.submit();
       }
     });
 

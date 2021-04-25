@@ -1,16 +1,19 @@
 <template>
   <div class="menu">
     <div class="row center-align">
-      <a @click.stop.prevent="sendMail" class="col s3">
+      <a @click.stop.prevent="sendMail" class="col s4">
         <i class="medium material-icons">import_export</i> <br />
         Exportar
       </a>
-      <a class="col s3">
+      <!-- <a class="col s4">
         <i @click.stop.prevent="syncAll" class="medium material-icons">sync</i> <br />
         Sincronizar
-      </a>
-      <a class="col s3">
-        <i @click.stop.prevent="sendAll" class="medium material-icons">cloud_upload</i> <br />
+      </a> -->
+      <a class="col s4">
+        <i @click.stop.prevent="sendAll" class="medium material-icons">
+          cloud_upload
+        </i>
+        <br />
         Enviar
       </a>
       <Speech
@@ -35,23 +38,33 @@ export default {
   },
   methods: {
     sendMail() {
-      let values = this.values.map((el) => {
-        return "\n" + Object.values(el).join(";\t");
+      let values = this.values.map((e) => {
+        return `\n ${e.npat}; ${e.local}; ${e.obs}\t`;
       });
-      let subject = `Inventário: backup realizado em ${new Date().toLocaleString('pt-BR')}`
+      let subject = `Inventário: backup realizado em ${new Date().toLocaleString(
+        "pt-BR"
+      )}`;
 
-      let body = encodeURIComponent(`
-      ${subject}
-
-      ${values}`);
-
-      window.open(`mailto:cap.goias@ifg.edu.br?subject=${subject}&body=${body}`);
+      let body = encodeURIComponent(`${values}`);
+      window.open(
+        `mailto:cap.goias@ifg.edu.br?subject=${subject}&body=${body}`
+      );
     },
-    syncAll(){
+    syncAll() {
       console.log("sync all");
     },
-    sendAll(){
-      console.log("Send all");
+    sendAll() {
+      if (confirm("Ainda em teste. Não recomendo a utlização!!!")) {
+        this.values.forEach((e, key) => {
+          // console.log(e, key)
+          if (e.icosent == "cloud_queue") {
+            console.log("Enviado", e);
+            this.$emit("sendGoogleSheet", key, false);
+          } else {
+            console.log("Não enviado", e);
+          }
+        });
+      }
     },
   },
 };

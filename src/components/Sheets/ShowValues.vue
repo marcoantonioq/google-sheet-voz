@@ -1,11 +1,13 @@
 <template>
-
   <div
     v-for="(items, local) in groupBy(values, 'local')"
     class="row itens"
     :key="items"
   >
-    <h4>{{ local ? local : "Não informado" }}</h4>
+    <h4>
+      <i class="material-icons prefix"> place </i>
+      {{ local ? local : "Não informado" }}
+    </h4>
     <div class="row" v-for="item in items" :key="item.key">
       <div class="row">
         <div class="col s12 m2">
@@ -14,16 +16,12 @@
           </b>
         </div>
         <div class="col s12 m10">
-          <i>
-            {{ item.others }}
-            Dados retornados do banco de dados!
-          </i>
+          <i v-html="item.others"></i>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          {{ item.obs ? `Obs: ${item.obs}` : "" }}
-          Observações
+          {{ item.obs ? `Obs: ${item.obs}` : "" }} <br />
         </div>
         <div class="right">
           <button
@@ -36,7 +34,7 @@
             v-on:click.stop.prevent="$emit('send', item.key)"
             v-bind:class="[item.lock ? 'disabled' : '', 'btn-flat']"
           >
-            <i class="material-icons">cloud_queue</i>
+            <i class="material-icons">{{ item.icosent || "cloud_queue" }}</i>
           </button>
         </div>
       </div>
@@ -73,10 +71,17 @@ export default {
   position: relative;
 }
 
+.prefix {
+  font-size: 2rem;
+}
+
 .right {
-  top: 39px;
+  top: -9px;
   position: absolute;
   right: 0px;
-  opacity: 0.8;
+  opacity: 0.7;
+}
+.right:hover {
+  opacity: 1;
 }
 </style>

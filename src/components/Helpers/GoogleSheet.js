@@ -1,6 +1,5 @@
 function GoogleSheet() {
   var instance = {};
-  var google = google || null;
 
   // Set the instance.
   instance = this;
@@ -9,29 +8,40 @@ function GoogleSheet() {
   GoogleSheet = function() {
     return instance;
   };
+  let func = (el) => el;
 
-  instance.getDataBase = (id) => {
-    google.script.run.withSuccessHandler(() => {}).pushValueWebApp(id);
+  // instance.getDataBase = (id) => {
+  //   google.script.run.withSuccessHandler(() => {}).pushValueWebApp(id);
+  // };
+
+  instance.pushValues = (value, call = func, fail = func) => {
+    try {
+    // eslint-disable-next-line no-undef
+    google.script.run
+      .withSuccessHandler(call)
+      .withFailureHandler(fail)
+      .pushValueWebApp(value);
+    } catch (e) {
+      console.log("Erro GooglePushValues");
+    }
   };
 
-  instance.getInfo = (npat) => {
+  /**
+   * Pega dados do Banco de Dados
+   * @param {function} call Função de retorno
+   * @returns void
+   */
+  instance.getCache = (call, fail = func) => {
     try {
-      google.script.run
-        .withSuccessHandler((data) => {
-          let v = data.values;
-          this.values = this.values.map((ob) => {
-            if (ob.npat == npat) {
-              ob.others = `${v[2]} - ${v[3]} - ${v[8]} - ${v[9]} - ${v[11]}`;
-            }
-            return ob;
-          });
-          console.log(this.values);
-        })
-        .getInfoWebApp(npat);
+      // eslint-disable-next-line no-undef
+      return google.script.run
+        .withSuccessHandler(call)
+        .withFailureHandler(fail)
+        .getInfoWebApp();
     } catch (e) {
-      console.log("Erro ao coletar Google getInfo");
+      console.log("Erro GoogleGetCache");
     }
   };
 }
 
-export let Sheet = new GoogleSheet();
+export const Sheet = new GoogleSheet();

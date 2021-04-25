@@ -14,6 +14,7 @@
 
   <Menu
     @transcript="(e) => (this.transcript = e)"
+    @sendGoogleSheet="sendGoogleSheet"
     @phrase="setPhrase"
     :values="values"
   />
@@ -50,24 +51,61 @@ export default {
     setPhrase(text) {
       Analyzer.analyzer(text);
     },
+    getOthers(npat) {
+      return this.cache
+        .find((el) => el[0] == npat)
+        ?.filter((v) => v)
+        ?.join("<br>");
+    },
     pushValues(values) {
+      values.others = this.getOthers(values.npat);
       let obj = JSON.parse(JSON.stringify(values));
       this.values.unshift(obj);
       this.saveStorage("values", this.values);
-      this.emitter.emit("msg", "Salvo com sucesso!!!");
     },
     removeValue(key) {
       let msg = `Remover ${this.values[key].npat} item?`;
       if (confirm(msg)) {
         this.values.splice(key, 1);
-        this.saveStorage("values", this.values);
+        this.saveValues();
       }
     },
-    sendGoogleSheet(e) {
-      console.log("App sendGoogle:", e);
+    saveValues: async function () {
+      this.saveStorage("values", this.values);
+    },
+    syncCache: async function () {
+      Sheet.getCache((el) => {
+        this.cache = JSON.parse(el);
+        this.emitter.emit("msg", "Cache atualizada!!!");
+      });
+    },
+    sendGoogleSheet: async function (key, remove = true) {
+      this.values[key].lock = true;
+      let value = Object.values(this.values[key]);
+      console.log("App sendGoogle:", value);
+      this.values[key].icosent = "cloud_upload";
+      Sheet.pushValues(
+        value,
+        (data) => {
+          this.emitter.emit("msg", "Enviado com sucesso!!!");
+          this.values[key].lock = false;
+          this.values[key].icosent = "cloud_done";
+          data.status && remove && this.removeValue(key);
+          this.saveValues();
+        },
+        () => {
+          this.values[key].lock = false;
+          this.emitter.emit("msg", "Erro ao enviar!!!");
+          this.values[key].icosent = "cloud_off";
+        }
+      );
     },
     getGoogleSheet(npat) {
       Sheet.getInfo(npat);
+    },
+    saveStorage: function (key, value) {
+      console.log(`Salvar ${key}:`, value);
+      localStorage.setItem(key, JSON.stringify(value));
     },
     readStorage: function (key) {
       return JSON.parse(localStorage.getItem(key));
@@ -75,14 +113,29 @@ export default {
     clearStorage: function () {
       localStorage.clear();
     },
-    saveStorage: function (key, value) {
-      console.log(`Salvar ${key}:`, value);
-      localStorage.setItem(key, JSON.stringify(value));
-    },
   },
   created() {
+    this.syncCache();
+    // this.cache = [
+    //   [
+    //     222222,
+    //     "",
+    //     "BANCADA 1 P/MARCENEIRO C/PRENSA DE 2,00X0,85.",
+    //     "SETOR DE PATRIMÔNIO",
+    //     "",
+    //     "thiago.nascimento@ifg.edu.br",
+    //   ],
+    //   [
+    //     111111,
+    //     "",
+    //     "BANCADA 2 P/MARCENEIRO C/PRENSA DE 2,00X0,85.",
+    //     "SETOR DE PATRIMÔNIO",
+    //     "",
+    //     "thiago.nascimento@ifg.edu.br",
+    //   ],
+    // ];
+
     let values = this.readStorage("values");
-    console.log(values);
     if (values) {
       this.values = values;
     } else {
@@ -91,16 +144,23 @@ export default {
 
     this.emitter.on("msg", (text) => {
       console.log(text);
+      // eslint-disable-next-line no-undef
+      M.toast({ html: text });
     });
   },
 };
 </script>
 
 <style>
+
 body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+}
+
+a {
+  cursor: pointer;
 }
 
 #app {

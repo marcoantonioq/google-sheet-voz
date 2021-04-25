@@ -1,9 +1,12 @@
 <template>
   <div class="row">
-    <div class="input-field col s12">
+    <div class="col s12">
       <div class="input-field col s12">
         <label for="npat" class="">Número de patrimônio</label>
         <input id="npat" v-model="value.npat" type="number" class="validate" />
+        <a class="s12" @click.stop.prevent="submit">
+          <i class="medium material-icons add"> add_box </i>
+        </a>
       </div>
       <div class="input-field col s12">
         <i class="material-icons prefix">location_on</i>
@@ -16,19 +19,10 @@
         <label for="obs">Observações</label>
       </div>
     </div>
-    <div class="center-align col s12">
-      <a class="col s6" @click.stop.prevent="add_col">
-        <i class="medium material-icons"> add_box </i>
-      </a>
-      <a class="col s6" @click.stop.prevent="submit">
-        <i class="medium material-icons"> save </i>
-      </a>
-    </div>
   </div>
 </template>
 
 <script>
-// import { Sheet } from "../Helpers/GoogleSheet.js";
 import { isNotEmpty } from "../Helpers/Validations.js";
 
 export default {
@@ -42,16 +36,13 @@ export default {
         obs: "",
         others: "",
         lock: false,
-        auto_send: true,
+        icosent: "cloud_queue",
+        auto_add: true,
+        auto_send: false,
       },
     };
   },
-  watch: {
-    "value.npat": function (npat) {
-      console.log(npat)
-      // this.others = Sheet.getInfo(npat);
-    },
-  },
+  watch: {},
   methods: {
     add_col: function () {
       console.log("Add col");
@@ -78,15 +69,21 @@ export default {
     },
   },
   created() {
-    // let form = this.readStorage("form");
-    // if (form) {
-    //   this.value = form;
-    // } 
+    let form = this.readStorage("form");
+    if (form) {
+      this.value = form;
+    }
   },
 };
 </script>
 
 <style scoped>
+.add {
+  position: absolute;
+  top: 10px;
+  right: 7px;
+}
+
 .medium {
   font-size: 2.3rem;
 }
