@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.5b9ee4f6e5c43bed341c8b9f44c35360.js"
+  "/precache-manifest.9ea12161f102066d4f2dc837e2681c7b.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "google-sheet-voz"});
