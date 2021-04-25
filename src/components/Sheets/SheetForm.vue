@@ -82,6 +82,7 @@ export default {
   position: absolute;
   top: 10px;
   right: 7px;
+  color: #00420c !important;
 }
 
 .medium {

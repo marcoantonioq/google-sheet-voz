@@ -54,7 +54,7 @@ export default {
       console.log("sync all");
     },
     sendAll() {
-      if (confirm("Ainda em teste. Não recomendo a utlização!!!")) {
+      if (confirm("Enviar tudo?")) {
         this.values.forEach((e, key) => {
           // console.log(e, key)
           if (e.icosent == "cloud_queue") {
@@ -75,8 +75,13 @@ export default {
   font-size: 2rem;
 }
 
+a, i {
+  color: #FFF !important;
+}
+
 .menu {
-  background: #333;
+  background: #195128;
+  color: #FFF;
   bottom: 0;
   left: 0;
   padding: 0.4rem;

@@ -19,7 +19,7 @@
     :values="values"
   />
 
-  <ClearAll @clearAll="clearAll" />
+  <ClearAll @clearAll="clearAll" :size="values.length" />
 </template>
 
 <script>
@@ -150,10 +150,16 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  background-color: #FAFBFC;
 }
 
 a {
   cursor: pointer;
+  color: #000801;
+}
+
+i {
+  color: #000801
 }
 
 #app {

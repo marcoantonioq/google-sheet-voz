@@ -88,6 +88,11 @@ export default {
 </script>
 
 <style scoped>
+
+a, i {
+  color: #FFF;
+}
+
 .voz {
   text-align: right;
   border-bottom: 1px solid #9e9e9e;

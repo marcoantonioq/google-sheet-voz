@@ -110,6 +110,8 @@ let ModelAnalyzer = {
   created() {
     try {
       Model[this.name](this);
+      // eslint-disable-next-line no-undef
+      M.updateTextFields();
     } catch (e) {
       e;
     }
