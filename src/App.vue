@@ -18,12 +18,15 @@
     @phrase="setPhrase"
     :values="values"
   />
+
+  <ClearAll @clearAll="clearAll" />
 </template>
 
 <script>
 import Values from "./components/Sheets/ShowValues.vue";
 import Menu from "./components/Menu.vue";
 import Form from "./components/Sheets/SheetForm.vue";
+import ClearAll from "./components/Clear.vue";
 
 import { Analyzer } from "./components/Model/ModelAnalyzer.js";
 import { Sheet } from "./components/Helpers/GoogleSheet.js";
@@ -34,6 +37,7 @@ export default {
     Values,
     Form,
     Menu,
+    ClearAll,
   },
   data() {
     return {
@@ -113,27 +117,15 @@ export default {
     clearStorage: function () {
       localStorage.clear();
     },
+    clearAll: function () {
+      if (confirm("Deseja limpar tudo?")) {
+        this.values = [];
+        this.clearStorage();
+      }
+    },
   },
   created() {
     this.syncCache();
-    // this.cache = [
-    //   [
-    //     222222,
-    //     "",
-    //     "BANCADA 1 P/MARCENEIRO C/PRENSA DE 2,00X0,85.",
-    //     "SETOR DE PATRIMÔNIO",
-    //     "",
-    //     "thiago.nascimento@ifg.edu.br",
-    //   ],
-    //   [
-    //     111111,
-    //     "",
-    //     "BANCADA 2 P/MARCENEIRO C/PRENSA DE 2,00X0,85.",
-    //     "SETOR DE PATRIMÔNIO",
-    //     "",
-    //     "thiago.nascimento@ifg.edu.br",
-    //   ],
-    // ];
 
     let values = this.readStorage("values");
     if (values) {
@@ -146,13 +138,14 @@ export default {
       console.log(text);
       // eslint-disable-next-line no-undef
       M.toast({ html: text });
+      // eslint-disable-next-line no-undef
+      M.updateTextFields();
     });
   },
 };
 </script>
 
 <style>
-
 body {
   display: flex;
   min-height: 100vh;
