@@ -8,7 +8,7 @@ const Model = {
   },
   SheetForm: (component) => {
     // add numero de patrimônio
-    Analyzer.registerEvent(Valid.match(/^^(\d)+/), (text) => {
+    Analyzer.registerEvent(Valid.match(/^\d+/), (text) => {
       let numValid = [Valid.isNumber, Valid.gt(10000)];
       let num = +text.replace(/\D+/g, "");
       let isValid = numValid.every((fun) => fun(num));
@@ -19,6 +19,11 @@ const Model = {
       }
     });
 
+    Analyzer.registerEvent(Valid.match(/^TÍTULO/), (text) => {
+      let replace = text.replace(/^(T|t)ítulo /g, "");
+      component.value.titulo = replace[0].toUpperCase() + replace.substr(1);
+    });
+
     Analyzer.registerEvent(
       Valid.match(/(^LOCAL|^SALA|^Bloco|^FALA)/),
       (texto) => {
@@ -27,6 +32,11 @@ const Model = {
         component.value.local = replace.replace(/^(L|l)ocal /g, "");
       }
     );
+
+    Analyzer.registerEvent(Valid.match(/^ESTADO/), (text) => {
+      let replace = text.replace(/^(E|e)stado /g, "");
+      component.value.status = replace[0].toUpperCase() + replace.substr(1);
+    });
 
     Analyzer.registerEvent(Valid.match(/^OBSERVAÇ(ÃO|ÕES)/), (texto) => {
       let replace = texto.replace(/^(O|o)bservação /g, "");
