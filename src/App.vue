@@ -20,6 +20,8 @@
     @phrase="setPhrase"
     :values="values"
   />
+
+  <Footer></Footer>
 </template>
 
 <script>
@@ -27,6 +29,7 @@ import Values from "./components/Sheets/ShowValues.vue";
 import Menu from "./components/Menu.vue";
 import Form from "./components/Sheets/SheetForm.vue";
 import ClearAll from "./components/Clear.vue";
+import Footer from "./components/Footer.vue";
 
 import { Analyzer } from "./components/Model/ModelAnalyzer.js";
 import { Sheet } from "./components/Helpers/GoogleSheet.js";
@@ -38,6 +41,7 @@ export default {
     Form,
     Menu,
     ClearAll,
+    Footer,
   },
   data() {
     return {
@@ -85,7 +89,6 @@ export default {
     },
     sendGoogleSheet: async function (key, remove = true) {
       console.log("Enviar dados:", key, remove)
-      console.log(this.values[key])
       this.values[key].lock = true;
       let value = Object.values(this.values[key]);
       console.log("App sendGoogle:", value);
@@ -110,7 +113,6 @@ export default {
       Sheet.getInfo(npat);
     },
     saveStorage: function (key, value) {
-      console.log(`Salvar ${key}:`, value);
       localStorage.setItem(key, JSON.stringify(value));
     },
     readStorage: function (key) {
@@ -120,7 +122,6 @@ export default {
       localStorage.clear();
     },
     clearAll: function () {
-      console.log("Limpar tudo?")
       if (confirm("Deseja limpar tudo?")) {
         this.values = [];
         this.clearStorage();
@@ -138,7 +139,6 @@ export default {
     }
 
     this.emitter.on("msg", (text) => {
-      console.log(text);
       // eslint-disable-next-line no-undef
       M.toast({ html: text });
       // eslint-disable-next-line no-undef

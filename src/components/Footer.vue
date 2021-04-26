@@ -1,7 +1,7 @@
 <template>
   <footer>
     <a target="_bkank" href="https://github.com/marcoantonioq">
-      © 2021 Copyright
+      1.0.2
     </a>
   </footer>
 </template>
@@ -14,8 +14,10 @@ export default {
 
 <style scoped>
 footer {
-  position: absolute;
-  width: 60%;
-  opacity: 0.4;
+  position: fixed;
+  opacity: 0.05;
+  z-index: 100;
+  bottom: 63px;
+  left: 1px;
 }
 </style>

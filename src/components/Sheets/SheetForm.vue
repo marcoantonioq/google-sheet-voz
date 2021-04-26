@@ -3,6 +3,8 @@
     <div class="input-field col s12">
       <input
         id="npat"
+        ref="npat"
+        @keyup.enter="submit"
         @focus="$event.target.select()"
         v-model="value.npat"
         placeholder="Número de patrimônio"
@@ -17,37 +19,62 @@
   <div class="form row">
     <div class="input-field col s12">
       <i class="material-icons prefix">title</i>
-      <label for="titulo" class="">Titulo item</label>
-      <input id="titulo" v-model="value.titulo" type="text" class="validate" />
-    </div>
-
-    <div class="input-field col s12">
-      <i class="material-icons prefix">person</i>
-      <label for="responsavel" class="">Responsável</label>
       <input
-        id="responsavel"
-        v-model="value.responsavel"
+        id="titulo"
+        @input="upper($event)"
+        v-model="value.titulo"
+        placeholder="Título do item"
         type="text"
         class="validate"
       />
     </div>
 
     <div class="input-field col s12">
-      <i class="material-icons prefix">location_on</i>
-      <label for="local" class="">Local</label>
-      <input id="local" v-model="value.local" type="text" class="validate" />
+      <i class="material-icons prefix">person</i>
+      <input
+        id="responsavel"
+        @input="lower($event)"
+        v-model="value.responsavel"
+        placeholder="Responsável (e-mail)"
+        type="email"
+        class="validate"
+      />
     </div>
 
     <div class="input-field col s12">
-      <i class="material-icons prefix">favorite</i>
-      <label for="status" class="">Estado informado</label>
-      <input id="status" v-model="value.status" type="text" class="validate" />
+      <i class="material-icons prefix">location_on</i>
+      <input
+        id="local"
+        @input="upper($event)"
+        v-model="value.local"
+        placeholder="Local"
+        type="text"
+        class="validate"
+      />
+    </div>
+
+    <div class="input-field col s12">
+      <i class="material-icons prefix">healing</i>
+      <input
+        id="status"
+        @input="upper($event)"
+        v-model="value.status"
+        placeholder="Estado informado"
+        type="text"
+        class="validate"
+      />
     </div>
 
     <div class="input-field col s12">
       <i class="material-icons prefix">more_horiz</i>
-      <input id="obs" v-model="value.obs" type="text" class="validate" />
-      <label for="obs">Observações</label>
+      <input
+        id="obs"
+        @input="upper($event)"
+        v-model="value.obs"
+        placeholder="Observações"
+        type="text"
+        class="validate"
+      />
     </div>
   </div>
 </template>
@@ -55,6 +82,7 @@
 <script>
 import { isNotEmpty } from "../Helpers/Validations.js";
 import { build } from "../Helpers/ListaDataSets.js";
+import { beep } from "../Helpers/Beep.js";
 
 export default {
   name: "SheetForm",
@@ -77,20 +105,24 @@ export default {
       },
     };
   },
-  watch: {},
   methods: {
-    add_col: function () {
-      console.log("Add col");
+    upper(e) {
+      e.target.value = e.target.value.toUpperCase();
+    },
+    lower(e) {
+      e.target.value = e.target.value.toLocaleLowerCase();
     },
     pushValues: function (value) {
       this.$emit("pushValues", value);
+      return true;
     },
     submit: function () {
       const valid = [isNotEmpty(this.value.npat), isNotEmpty(this.value.local)];
-
       if (valid.every((e) => e)) {
-        console.log("on push submit");
-        this.pushValues(this.value);
+        // Selecionar npat
+        this.$refs.npat.select();
+        // enviar
+        this.pushValues(this.value) && beep();
         this.saveStorage("form", this.value);
       } else {
         this.emitter.emit("msg", "Verifique todos o campos!");
@@ -108,9 +140,9 @@ export default {
     if (form) {
       this.value = form;
     }
-
   },
-  mounted(){
+  mounted() {
+    // Contruir onComplete
     build("local", (str) => {
       this.value.local = str;
     });
@@ -120,7 +152,7 @@ export default {
     build("responsavel", (str) => {
       this.value.responsavel = str;
     });
-  }
+  },
 };
 </script>
 

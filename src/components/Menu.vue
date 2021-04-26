@@ -57,7 +57,6 @@ export default {
     sendAll() {
       if (confirm("Enviar tudo?")) {
         this.values.forEach((e, key) => {
-          // console.log(e, key)
           if (e.icosent != "cloud_done") {
             console.log("Enviado", e);
             this.$emit("sendGoogleSheet", key, false);
