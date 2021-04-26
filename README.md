@@ -20,4 +20,4 @@ function doGet(e) {
 
 # PrintSC
 
-![image](https://raw.githubusercontent.com/marcoantonioq/google-sheet-voz/demo/print.png)
+![image](https://raw.githubusercontent.com/marcoantonioq/google-sheet-voz/main/demo/print.png)
