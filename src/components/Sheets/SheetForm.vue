@@ -54,10 +54,11 @@
 
 <script>
 import { isNotEmpty } from "../Helpers/Validations.js";
+import { build } from "../Helpers/ListaDataSets.js";
 
 export default {
   name: "SheetForm",
-  emits: ['pushValues'],
+  emits: ["pushValues"],
   data() {
     return {
       name: "SheetForm",
@@ -107,7 +108,22 @@ export default {
     if (form) {
       this.value = form;
     }
+
   },
+  mounted(){
+    build("local", (str) => {
+      this.value.local = str;
+      console.log(this.value)
+    });
+    build("status", (str) => {
+      this.value.status = str;
+      console.log(this.value)
+    });
+    build("responsavel", (str) => {
+      this.value.responsavel = str;
+      console.log(this.value)
+    });
+  }
 };
 </script>
 
