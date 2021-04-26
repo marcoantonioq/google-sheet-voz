@@ -21,7 +21,9 @@
       </div>
       <div class="row">
         <div class="col">
-          {{ item.obs ? `Obs: ${item.obs}` : "" }} <br />
+            {{ item.titulo }} • {{ item.responsavel }} •
+            {{ item.local }} • {{ item.status }}<br />
+            {{ item.obs ? `Obs: ${item.obs}` : "" }} <br />
         </div>
         <div class="right">
           <button
