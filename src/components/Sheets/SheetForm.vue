@@ -113,15 +113,12 @@ export default {
   mounted(){
     build("local", (str) => {
       this.value.local = str;
-      console.log(this.value)
     });
     build("status", (str) => {
       this.value.status = str;
-      console.log(this.value)
     });
     build("responsavel", (str) => {
       this.value.responsavel = str;
-      console.log(this.value)
     });
   }
 };

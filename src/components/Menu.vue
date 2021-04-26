@@ -37,9 +37,10 @@ export default {
     Speech,
   },
   methods: {
+    
     sendMail() {
       let values = this.values.map((e) => {
-        return `\n ${e.npat}; ${e.local}; ${e.obs}\t`;
+        return `\n ${e.npat}; ${e.titulo}; ;${e.responsavel}; ; ${e.local}; ${e.status}; ; ${e.obs} ${e.obs}\t`;
       });
       let subject = `Inventário: backup realizado em ${new Date().toLocaleString(
         "pt-BR"

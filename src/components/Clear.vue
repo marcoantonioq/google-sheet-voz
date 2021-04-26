@@ -5,7 +5,7 @@
     class="waves-effect waves-light btn"
   >
     Limpart tudo!
-    {{ size }}
+    ({{ size }})
   </a>
 </template>
 
