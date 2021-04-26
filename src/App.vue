@@ -12,14 +12,14 @@
 
   <Values @remove="removeValue" @send="sendGoogleSheet" :values="values" />
 
+  <ClearAll @clearAll="clearAll" :size="values.length" />
+
   <Menu
     @transcript="(e) => (this.transcript = e)"
     @sendGoogleSheet="sendGoogleSheet"
     @phrase="setPhrase"
     :values="values"
   />
-
-  <ClearAll @clearAll="clearAll" :size="values.length" />
 </template>
 
 <script>
@@ -84,6 +84,8 @@ export default {
       });
     },
     sendGoogleSheet: async function (key, remove = true) {
+      console.log("Enviar dados:", key, remove)
+      console.log(this.values[key])
       this.values[key].lock = true;
       let value = Object.values(this.values[key]);
       console.log("App sendGoogle:", value);
@@ -118,6 +120,7 @@ export default {
       localStorage.clear();
     },
     clearAll: function () {
+      console.log("Limpar tudo?")
       if (confirm("Deseja limpar tudo?")) {
         this.values = [];
         this.clearStorage();
@@ -174,8 +177,9 @@ i {
   position: fixed;
   right: 0;
   text-align: right;
-  background-color: #ffeded;
+  background-color: #15842A;
+  color: #FFF;
   border-radius: 0px 0px 0px 5px;
-  z-index: 1;
+  z-index: 100;
 }
 </style>

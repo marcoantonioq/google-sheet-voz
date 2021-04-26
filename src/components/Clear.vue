@@ -1,6 +1,7 @@
 <template>
   <a
-    v-if="size>2" v-on:click="$emit('clearAll')"
+    v-on:click="$emit('clearAll')"
+    v-if="size > 2"
     class="waves-effect waves-light btn"
   >
     Limpart tudo!
@@ -21,6 +22,5 @@ export default {
 .btn {
   width: 100%;
   background-color: #690700;
-  z-index: -1;
 }
 </style>

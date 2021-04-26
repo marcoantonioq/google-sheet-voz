@@ -57,7 +57,7 @@ export default {
       if (confirm("Enviar tudo?")) {
         this.values.forEach((e, key) => {
           // console.log(e, key)
-          if (e.icosent == "cloud_queue") {
+          if (e.icosent != "cloud_done") {
             console.log("Enviado", e);
             this.$emit("sendGoogleSheet", key, false);
           } else {
@@ -87,6 +87,7 @@ a, i {
   padding: 0.4rem;
   position: fixed;
   width: 100%;
+  z-index: 99;
 }
 .menu .row {
   margin: 0;

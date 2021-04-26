@@ -1,23 +1,53 @@
 <template>
-  <div class="row">
-    <div class="col s12">
-      <div class="input-field col s12">
-        <label for="npat" class="">Número de patrimônio</label>
-        <input id="npat" v-model="value.npat" type="number" class="validate" />
-        <a class="s12" @click.stop.prevent="submit">
-          <i class="medium material-icons add"> add_box </i>
-        </a>
-      </div>
-      <div class="input-field col s12">
-        <i class="material-icons prefix">location_on</i>
-        <label for="local" class="">Local</label>
-        <input id="local" v-model="value.local" type="text" class="validate" />
-      </div>
-      <div class="input-field col s12">
-        <i class="material-icons prefix">more_horiz</i>
-        <input id="obs" v-model="value.obs" type="text" class="validate" />
-        <label for="obs">Observações</label>
-      </div>
+  <div class="fixed">
+    <div class="input-field col s12">
+      <input
+        id="npat"
+        @focus="$event.target.select()"
+        v-model="value.npat"
+        placeholder="Número de patrimônio"
+        type="number"
+        class="validate"
+      />
+      <a class="s12" @click.stop.prevent="submit">
+        <i class="medium material-icons add"> add_box </i>
+      </a>
+    </div>
+  </div>
+  <div class="form row">
+    <div class="input-field col s12">
+      <i class="material-icons prefix">title</i>
+      <label for="titulo" class="">Titulo item</label>
+      <input id="titulo" v-model="value.titulo" type="text" class="validate" />
+    </div>
+
+    <div class="input-field col s12">
+      <i class="material-icons prefix">person</i>
+      <label for="responsavel" class="">Responsável</label>
+      <input
+        id="responsavel"
+        v-model="value.responsavel"
+        type="text"
+        class="validate"
+      />
+    </div>
+
+    <div class="input-field col s12">
+      <i class="material-icons prefix">location_on</i>
+      <label for="local" class="">Local</label>
+      <input id="local" v-model="value.local" type="text" class="validate" />
+    </div>
+
+    <div class="input-field col s12">
+      <i class="material-icons prefix">favorite</i>
+      <label for="status" class="">Estado informado</label>
+      <input id="status" v-model="value.status" type="text" class="validate" />
+    </div>
+
+    <div class="input-field col s12">
+      <i class="material-icons prefix">more_horiz</i>
+      <input id="obs" v-model="value.obs" type="text" class="validate" />
+      <label for="obs">Observações</label>
     </div>
   </div>
 </template>
@@ -27,12 +57,16 @@ import { isNotEmpty } from "../Helpers/Validations.js";
 
 export default {
   name: "SheetForm",
+  emits: ['pushValues'],
   data() {
     return {
       name: "SheetForm",
       value: {
         npat: null,
+        titulo: "",
+        responsavel: "",
         local: "",
+        status: "",
         obs: "",
         others: "",
         lock: false,
@@ -81,11 +115,32 @@ export default {
 .add {
   position: absolute;
   top: 10px;
-  right: 7px;
-  color: #00420c !important;
+  right: 28px;
+  color: #fff !important;
 }
 
 .medium {
   font-size: 2.3rem;
+}
+
+.fixed {
+  position: fixed;
+  background-color: #195128;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+}
+
+.fixed .input-field {
+  padding: 5px 30px;
+  margin: 0px;
+}
+.fixed .input-field input {
+  font-weight: 700;
+  color: #fff;
+}
+
+.form {
+  margin-top: 70px;
 }
 </style>
