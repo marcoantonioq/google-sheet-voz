@@ -88,7 +88,6 @@ export default {
       });
     },
     sendGoogleSheet: async function (key, remove = true) {
-      console.log("Enviar dados:", key, remove)
       this.values[key].lock = true;
       let value = Object.values(this.values[key]);
       console.log("App sendGoogle:", value);
@@ -153,7 +152,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: #FAFBFC;
+  background-color: #fafbfc;
 }
 
 a {
@@ -162,7 +161,7 @@ a {
 }
 
 i {
-  color: #000801
+  color: #000801;
 }
 
 #app {
@@ -177,9 +176,10 @@ i {
   position: fixed;
   right: 0;
   text-align: right;
-  background-color: #15842A;
-  color: #FFF;
+  background-color: #15842a;
+  color: #fff;
   border-radius: 0px 0px 0px 5px;
   z-index: 100;
+  box-shadow: 1px 6px 16px 2px rgba(0, 0, 0, 0.3);
 }
 </style>

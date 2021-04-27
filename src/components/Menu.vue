@@ -46,7 +46,7 @@ export default {
         "pt-BR"
       )}`;
 
-      let body = encodeURIComponent(`${values}`);
+      let body = encodeURIComponent(`${values.join('')}`);
       window.open(
         `mailto:cap.goias@ifg.edu.br?subject=${subject}&body=${body}`
       );

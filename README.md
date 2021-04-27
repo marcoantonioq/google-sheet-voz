@@ -2,6 +2,8 @@
 
 Sistema em GoogleScript+VueJS para auxiliar no inventário anual do IFG-Campus Cidade de Goiás. 
 
+Compatibilidade com leitor código de barra e voz.
+
 # Back-end
 
 ```js
