@@ -76,6 +76,12 @@
         class="validate"
       />
     </div>
+    <p>
+      <label>
+        <input type="checkbox" v-model="value.auto_add" />
+        <span>Adicionar automaticamente</span>
+      </label>
+    </p>
   </div>
 </template>
 
@@ -117,6 +123,7 @@ export default {
       return true;
     },
     submit: function () {
+      console.log("submit", this.value);
       const valid = [isNotEmpty(this.value.npat), isNotEmpty(this.value.local)];
       if (valid.every((e) => e)) {
         // Selecionar npat
@@ -125,6 +132,7 @@ export default {
         this.pushValues(this.value) && beep();
         this.saveStorage("form", this.value);
       } else {
+        console.log("Verifique todos os campos!!!");
         this.emitter.emit("msg", "Verifique todos o campos!");
       }
     },
@@ -138,7 +146,7 @@ export default {
   created() {
     let form = this.readStorage("form");
     if (form) {
-      this.value = form;
+      this.value = Object.assign(this.value, form);
     }
   },
   mounted() {

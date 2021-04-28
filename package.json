@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "HTTPS=false vue-cli-service serve",
     "build": "vue-cli-service build",
     "push": "npm run build ; git add . ; git commit -m 'New build' -a ; git push --all -u",
     "lint": "vue-cli-service lint"

@@ -8,15 +8,11 @@ const Model = {
   },
   SheetForm: (component) => {
     // add numero de patrimônio
-    Analyzer.registerEvent(Valid.match(/^\d+/), (text) => {
-      let numValid = [Valid.isNumber, Valid.gt(10000)];
-      let num = +text.replace(/\D+/g, "");
-      let isValid = numValid.every((fun) => fun(num));
-      console.log("recebido valor", num);
-      if (isValid) {
-        component.value.npat = num;
-        component.value.auto_add && component.submit();
-      }
+    Analyzer.registerEvent(Valid.match(/^\d{3,}/), (text) => {
+      console.log("add numero: ", text);
+      component.value.npat = text;
+      console.log("auto_add", component.value);
+      component.value.checkadd && component.submit();
     });
 
     Analyzer.registerEvent(Valid.match(/^TÍTULO/), (text) => {
