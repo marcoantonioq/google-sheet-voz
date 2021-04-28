@@ -25,4 +25,4 @@ function doGet(e) {
     <img src="https://raw.githubusercontent.com/marcoantonioq/google-sheet-voz/main/demo/print.png"> 
 </p>
 
-### [Link de demonstração](https://marcoantonioq.000webhostapp.com/)
+### [Link de demonstração](https://marcoantonioq.github.io/voz/)
