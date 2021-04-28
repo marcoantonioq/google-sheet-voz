@@ -4,7 +4,7 @@
     https://github.com/marcoantonioq/google-sheet-voz
   -->
 
-  <div class="transcript">
+  <div v-if="transcript" class="transcript">
     {{ transcript }}
   </div>
 
