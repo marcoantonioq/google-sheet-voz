@@ -34,6 +34,13 @@ export default {
     },
   },
   methods: {
+    start: function() {
+      this.transcript = true;
+    },
+    onend: function () {
+      this.tracking = false;
+      // this.tracking ? this.recognition.start() : this.recognition.stop();
+    },
     toggleTracking: function () {
       this.tracking = !this.tracking;
       if (this.tracking) {
@@ -67,9 +74,6 @@ export default {
     onspeechend: function () {
       this.recognition.stop();
     },
-    onend: function () {
-      this.tracking ? this.recognition.start() : this.recognition.stop();
-    },
   },
   created: function () {
     let sr = window.webkitSpeechRecognition || window.SpeechRecognition;
@@ -78,6 +82,7 @@ export default {
       interimResults: true,
       lang: this.lang || "pt-BR",
       onresult: this.result,
+      onstart: this.start,
       onerror: this.error,
       onspeechstart: this.onspeechstart,
       onspeechend: this.onspeechend,

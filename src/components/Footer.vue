@@ -1,7 +1,7 @@
 <template>
   <footer>
     <a target="_bkank" href="https://github.com/marcoantonioq">
-      1.0.3
+      1.0.3-1
     </a>
   </footer>
 </template>
