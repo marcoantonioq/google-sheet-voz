@@ -11,8 +11,7 @@ const Model = {
     Analyzer.registerEvent(Valid.match(/^\d{3,}/), (text) => {
       console.log("add numero: ", text);
       component.value.npat = text;
-      console.log("auto_add", component.value);
-      component.value.checkadd && component.submit();
+      component.value.auto_add && component.submit();
     });
 
     Analyzer.registerEvent(Valid.match(/^TÍTULO/), (text) => {
