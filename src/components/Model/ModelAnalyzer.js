@@ -9,8 +9,7 @@ const Model = {
   SheetForm: (component) => {
     // add numero de patrimônio
     Analyzer.registerEvent(Valid.match(/^\d{3,}/), (text) => {
-      console.log("add numero: ", text);
-      component.value.npat = text;
+      component.value.npat = +text.replace(/\D+/g, "");
       component.value.auto_add && component.submit();
     });
 
