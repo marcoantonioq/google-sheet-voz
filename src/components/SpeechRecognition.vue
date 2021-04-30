@@ -34,19 +34,43 @@ export default {
     },
   },
   methods: {
-    toggleTracking: function () {
-      this.tracking = !this.tracking;
-      if (this.tracking) {
+    start: function () {
+      console.log("start");
+      let sr = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (sr) {
+        this.recognition = Object.assign(new sr(), {
+          continuous: true,
+          interimResults: true,
+          lang: this.lang || "pt-BR",
+          onresult: this.result,
+          onstart: this.onstart,
+          onerror: this.onerror,
+          onspeechstart: this.onspeechstart,
+          onspeechend: this.onspeechend,
+          onend: this.onend,
+        });
         this.recognition.start();
       } else {
-        this.recognition.stop();
+        alert("Navegador não compativél com speech recognition!");
       }
+    },
+    onstart() {
+      this.tracking = true;
+    },
+    stop: function () {
+      this.tracking = false;
+      this.recognition.stop();
+    },
+    onend: function () {
+      console.log("stop");
+      this.tracking ? this.start() : this.stop();
     },
     result: function (event) {
       this.transcript = "";
       for (var i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
           this.phrase = event.results[i][0].transcript;
+          console.log(this.phrase);
         } else {
           this.transcript += event.results[i][0].transcript;
         }
@@ -54,43 +78,38 @@ export default {
     },
     onerror: function (event) {
       if (event.error === "not-allowed") {
-        console.log("Erro ao acessar o microfone :(. De permissão!!!");
+        this.emitter.emit(
+          "msg",
+          "Erro ao acessar o microfone :(. De permissão!!!"
+        );
       } else if (event.error === "aborted") {
-        console.log("Verifique se seu microfone está desocupado!");
+        this.emitter.emit("msg", "Verifique se seu microfone está desocupado!");
       }
-      this.emitter.emit("msg", "Erro ao acessar o microfone!");
-      this.recognition.stop();
+      this.stop();
     },
     onspeechstart: function () {
       console.log("speech started");
     },
-    onspeechend: function () {
-      this.recognition.stop();
-    },
-    onend: function () {
-      this.tracking ? this.recognition.start() : this.recognition.stop();
+    toggleTracking: function (e) {
+      console.log("toggle");
+      if (e.target) {
+        this.tracking = !this.tracking;
+        if (this.tracking) {
+          this.start();
+        } else {
+          this.stop();
+        }
+      }
     },
   },
-  created: function () {
-    let sr = window.webkitSpeechRecognition || window.SpeechRecognition;
-    this.recognition = Object.assign(new sr(), {
-      continuous: false,
-      interimResults: true,
-      lang: this.lang || "pt-BR",
-      onresult: this.result,
-      onerror: this.error,
-      onspeechstart: this.onspeechstart,
-      onspeechend: this.onspeechend,
-      onend: this.onend,
-    });
-  },
+  created() {},
 };
 </script>
 
 <style scoped>
-
-a, i {
-  color: #FFF;
+a,
+i {
+  color: #fff;
 }
 
 .voz {
@@ -106,5 +125,4 @@ a, i {
   right: -8px;
   position: relative;
 }
-
 </style>

@@ -1,5 +1,6 @@
 export const dataSet = {
   local: {
+    minLength: 0,
     data: {
       "AGRO COORD": null,
       "ÁREAS COMUNS": null,
@@ -131,6 +132,7 @@ export const dataSet = {
     },
   },
   status: {
+    minLength: 0,
     data: {
       BOM: null,
       DANIFICADO: null,
@@ -139,6 +141,7 @@ export const dataSet = {
     },
   },
   responsavel: {
+    minLength: 0,
     data: {
       "abishai.neto@ifg.edu.br": null,
       "aderito.tavora@ifg.edu.br": null,

@@ -10,6 +10,7 @@
         placeholder="Número de patrimônio"
         type="number"
         class="validate"
+        autocomplete="off"
       />
       <a class="s12" @click.stop.prevent="submit">
         <i class="medium material-icons add"> add_box </i>
@@ -26,6 +27,7 @@
         placeholder="Título do item"
         type="text"
         class="validate"
+        autocomplete="off"
       />
     </div>
 
@@ -38,6 +40,7 @@
         placeholder="Responsável (e-mail)"
         type="email"
         class="validate"
+        autocomplete="off"
       />
     </div>
 
@@ -50,6 +53,7 @@
         placeholder="Local"
         type="text"
         class="validate"
+        autocomplete="off"
       />
     </div>
 
@@ -62,6 +66,7 @@
         placeholder="Estado informado"
         type="text"
         class="validate"
+        autocomplete="off"
       />
     </div>
 

@@ -8,7 +8,8 @@ const Model = {
   },
   SheetForm: (component) => {
     // add numero de patrimônio
-    Analyzer.registerEvent(Valid.match(/^\d{3,}/), (text) => {
+    Analyzer.registerEvent(Valid.match(/^\d{3,}/g), (text) => {
+      console.log("Inserir:", text);
       component.value.npat = +text.replace(/\D+/g, "");
       component.value.auto_add && component.submit();
     });
@@ -53,7 +54,7 @@ const Model = {
     });
   },
   App: (component) => {
-    Analyzer.registerEvent(Valid.match(/^(APAGA|REMOVE)?(R|)$/), () => {
+    Analyzer.registerEvent(Valid.match(/^(APAGAR|REMOVER)$/), () => {
       component.emitter.emit("msg", "Apagar ultimo item!");
       component.removeValue(0);
     });

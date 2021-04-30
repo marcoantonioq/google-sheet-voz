@@ -57,7 +57,7 @@ export default {
       console.log("Recebido texto em app: ", text);
     },
     setPhrase(text) {
-      Analyzer.analyzer(text);
+      Analyzer.analyzer(text.trim());
     },
     getOthers(npat) {
       return this.cache
