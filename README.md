@@ -36,4 +36,10 @@ function doGet(e) {
     <img src="https://raw.githubusercontent.com/marcoantonioq/google-sheet-voz/main/demo/print.png"> 
 </p>
 
+<p align="center" width="100%">
+    <img src="https://raw.githubusercontent.com/marcoantonioq/google-sheet-voz/main/demo/reports.png"> 
+</p>
+
+
 ### [Link de demonstração](https://marcoantonioq.github.io/voz/)
+
