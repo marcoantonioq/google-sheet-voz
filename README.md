@@ -3,6 +3,17 @@
 Sistema em GoogleScript+VueJS para auxiliar no inventário anual do IFG-Campus Cidade de Goiás. 
 
 Compatibilidade com leitor código de barra e voz.
+### Project setup
+
+```
+npm install
+```
+
+#### Compiles and hot-reloads for development
+
+```
+npm run serve
+```
 
 # Back-end
 
