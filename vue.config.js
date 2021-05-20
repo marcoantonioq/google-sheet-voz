@@ -1,4 +1,6 @@
 module.exports = {
+  lintOnSave: true,
+  productionSourceMap: false,
   chainWebpack: (config) => {
     config.module
       .rule("images")
@@ -25,15 +27,27 @@ module.exports = {
   },
   css: {
     extract: {
-      filename: "css/app.css",
-      chunkFilename: "css/chunk.css",
+      filename: "css/[name].css",
+      chunkFilename: "css/[name].css",
     },
   },
   configureWebpack: {
     output: {
-      filename: "js/app.js",
-      chunkFilename: "js/chunk.js",
+      filename: "js/[name].js",
+      chunkFilename: "js/[name].js",
     },
+    optimization: {
+      splitChunks: false,
+    },
+  },
+  pwa: {
+    name: 'My Finances',
+    themeColor: '#e30713',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black',
+    workboxOptions: {
+      skipWaiting: true
+    }
   },
   // devServer: {
   //   host: '0.0.0.0',

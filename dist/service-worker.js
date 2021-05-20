@@ -14,16 +14,12 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.4945557d3f2afa55984afb8af03edab1.js"
+  "/precache-manifest.697fe8d1b1e0444b99cd7e354117482e.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "google-sheet-voz"});
 
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-});
+workbox.core.skipWaiting();
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
